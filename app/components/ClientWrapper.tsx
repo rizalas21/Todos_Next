@@ -4,8 +4,6 @@ import { SessionProvider, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { useState } from "react";
-import { AddTodo } from "./AddTodo";
 
 export default function ClientWrapper({
   children,
