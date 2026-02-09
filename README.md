@@ -44,7 +44,7 @@ This application allows users to manage daily tasks securely with authentication
 
 ### 1️⃣ Clone Repository
 
-```bash
+bash
 git clone https://github.com/USERNAME/REPO_NAME.git
 cd REPO_NAME
 
@@ -65,16 +65,15 @@ npx prisma migrate dev
 5️⃣ Run Development Server
 npm run dev
 
-
 Open browser:
 
 http://localhost:3000
 
 📁 Project Structure
 /app
-  /api
-  /dashboard
-  /auth
+/api
+/dashboard
+/auth
 /components
 /lib
 /prisma
@@ -93,7 +92,6 @@ Serve as portfolio project
 ![alt text](image-1.png)
 ![alt text](image-2.png)
 ![alt text](image-3.png)
-```
 
 nextjs
 react
