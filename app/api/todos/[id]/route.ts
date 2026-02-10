@@ -1,14 +1,17 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
   try {
     const { id } = await params;
 
     if (!id)
       return NextResponse.json(
         { success: false, message: "ID_REQUIRED" },
-        { status: 400 }
+        { status: 400 },
       );
 
     const todos = await prisma.todo.findUnique({ where: { id } });
@@ -16,7 +19,7 @@ export async function GET({ params }: { params: { id: string } }) {
     if (!todos)
       return NextResponse.json(
         { success: false, message: "TODOS_NOT_FOUND" },
-        { status: 404 }
+        { status: 404 },
       );
 
     return NextResponse.json(
@@ -25,19 +28,19 @@ export async function GET({ params }: { params: { id: string } }) {
         message: "SUCCESS",
         data: todos,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
       { success: false, message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = await params;
@@ -46,7 +49,7 @@ export async function PUT(
     if (!id)
       return NextResponse.json(
         { success: false, message: "ID_REQUIRED" },
-        { status: 400 }
+        { status: 400 },
       );
 
     const checkTodo = await prisma.todo.findUnique({ where: { id } });
@@ -54,7 +57,7 @@ export async function PUT(
     if (!checkTodo)
       return NextResponse.json(
         { success: false, message: "TODOS_NOT_FOUND" },
-        { status: 404 }
+        { status: 404 },
       );
 
     const todos = await prisma.todo.update({ where: { id }, data });
@@ -64,19 +67,19 @@ export async function PUT(
         message: "SUCCESS",
         data: todos,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
       { success: false, message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = await params;
@@ -85,7 +88,7 @@ export async function DELETE(
     if (!id)
       return NextResponse.json(
         { success: false, message: "ID_REQUIRED" },
-        { status: 400 }
+        { status: 400 },
       );
 
     const checkTodo = await prisma.todo.findUnique({ where: { id } });
@@ -93,7 +96,7 @@ export async function DELETE(
     if (!checkTodo)
       return NextResponse.json(
         { success: false, message: "TODOS_NOT_FOUND" },
-        { status: 404 }
+        { status: 404 },
       );
 
     const todos = await prisma.todo.delete({ where: { id } });
@@ -103,13 +106,13 @@ export async function DELETE(
         message: "SUCCESS",
         data: todos,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
       { success: false, message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
