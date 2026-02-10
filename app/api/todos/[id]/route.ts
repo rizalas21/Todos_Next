@@ -1,37 +1,35 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-type Params = {
-  params: {
-    id: string;
-  };
-};
-
-export async function GET(req: NextRequest, { params }: Params) {
+export async function GET(
+  req: NextRequest,
+  context: { params: { id: string } },
+) {
   try {
-    const { id } = params; // ✅ TANPA await
+    const { id } = context.params;
 
-    if (!id) {
+    if (!id)
       return NextResponse.json(
         { success: false, message: "ID_REQUIRED" },
         { status: 400 },
       );
-    }
 
     const todos = await prisma.todo.findUnique({ where: { id } });
 
-    if (!todos) {
+    if (!todos)
       return NextResponse.json(
         { success: false, message: "TODOS_NOT_FOUND" },
         { status: 404 },
       );
-    }
 
-    return NextResponse.json({
-      success: true,
-      message: "SUCCESS",
-      data: todos,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "SUCCESS",
+        data: todos,
+      },
+      { status: 200 },
+    );
   } catch (error) {
     return NextResponse.json(
       { success: false, message: "Internal Server Error" },
@@ -40,9 +38,12 @@ export async function GET(req: NextRequest, { params }: Params) {
   }
 }
 
-export async function PUT(req: NextRequest, { params }: Params) {
+export async function PUT(
+  req: NextRequest,
+  context: { params: { id: string } },
+) {
   try {
-    const { id } = await params;
+    const { id } = context.params;
     const data = await req.json();
 
     if (!id)
@@ -76,9 +77,12 @@ export async function PUT(req: NextRequest, { params }: Params) {
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: Params) {
+export async function DELETE(
+  req: NextRequest,
+  context: { params: { id: string } },
+) {
   try {
-    const { id } = await params;
+    const { id } = context.params;
     console.log("ini params nya: ");
 
     if (!id)
